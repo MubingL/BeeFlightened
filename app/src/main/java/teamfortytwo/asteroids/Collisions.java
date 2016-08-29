@@ -2,9 +2,6 @@ package teamfortytwo.asteroids;
 
 import java.util.ArrayList;
 
-/**
- * Created by BrandonWebster on 4/27/15.
- */
 public class Collisions {
 
     static final int off_x = 1, off_y = 2, colliding = 3;
@@ -13,15 +10,15 @@ public class Collisions {
     GameView view;
     ArrayList<Entity> entities;
 
-    public Collisions(GameView view){
+    public Collisions(GameView view) {
         this.view = view;
 
         screenHeight = GameScreen.screenHeight;
         screenWidth = GameScreen.screenWidth;
     }
 
-    public int check(Entity entity){
-        if(view.getEntities()!=null) {
+    public int check(Entity entity) {
+        if (view.getEntities() != null) {
             int x = entity.getPos().getX(), y = entity.getPos().getY();
             entities = view.getEntities();
             for (int i = 0; i < entities.size(); i++) {
@@ -37,9 +34,6 @@ public class Collisions {
             }
         }
 
-
-
         return 0;
     }
-
 }

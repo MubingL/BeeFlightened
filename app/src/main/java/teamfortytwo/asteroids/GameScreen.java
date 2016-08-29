@@ -9,16 +9,13 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 
-/**
- * Created by BrandonWebster on 4/8/15.
- */
-public class GameScreen extends Activity implements OnClickListener, SensorEventListener{
+public class GameScreen extends Activity implements OnClickListener, SensorEventListener {
+    private static final String THE_SCORE = "theScore";
 
     private SensorManager sManager;
     private Sensor accelerometer, magnetometer;
@@ -32,11 +29,10 @@ public class GameScreen extends Activity implements OnClickListener, SensorEvent
 
     static int screenWidth;
     static int screenHeight;
-//    private MainScreen mainScreen;
-    protected void onCreate(Bundle savedInstanceState){
+
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i("GameScreen", "Created");
         //Used for determining screen size in pixels
         DisplayMetrics displayMetrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) getApplicationContext().getSystemService(this.WINDOW_SERVICE);
@@ -69,33 +65,28 @@ public class GameScreen extends Activity implements OnClickListener, SensorEvent
         viewAnim.addUpdateListener(view);
         viewAnim.start();
 
-
-
-
         view.setOnClickListener(this);
         setContentView(view);
         System.gc();
     }
 
     @Override
-    public void onDestroy(){
-        Intent i =new Intent(GameScreen.this, ScoreScreen.class);
-        i.putExtra("theScore",view.getScore());
+    public void onDestroy() {
+        Intent i = new Intent(GameScreen.this, ScoreScreen.class);
+        i.putExtra(THE_SCORE, view.getScore());
         super.onDestroy();
-        Log.i("GameScreen", "Destroyed");
         view.destroyDrawingCache();
         startActivity(i);
-
     }
 
-    public void endGame(){
+    public void endGame() {
         finish();
         view.nullEntityArray();
         System.gc();
-        }
+    }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         accSet = false;
         magSet = false;
@@ -104,7 +95,7 @@ public class GameScreen extends Activity implements OnClickListener, SensorEvent
     }
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
         sManager.unregisterListener(this, accelerometer);
         sManager.unregisterListener(this, magnetometer);
@@ -113,15 +104,14 @@ public class GameScreen extends Activity implements OnClickListener, SensorEvent
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-
-        if(event.sensor == accelerometer){
+        if (event.sensor == accelerometer) {
             System.arraycopy(event.values, 0, lastAccelerometer, 0, event.values.length);
             accSet = true;
-        }else if(event.sensor == magnetometer){
+        } else if (event.sensor == magnetometer) {
             System.arraycopy(event.values, 0, lastMagnetometer, 0, event.values.length);
             magSet = true;
         }
-        if(accSet && magSet){
+        if (accSet && magSet) {
             SensorManager.getRotationMatrix(mR, null, lastAccelerometer, lastMagnetometer);
             SensorManager.getOrientation(mR, mOrientation);
         }
@@ -132,7 +122,6 @@ public class GameScreen extends Activity implements OnClickListener, SensorEvent
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
     }
 
     @Override

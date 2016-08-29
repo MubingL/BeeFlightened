@@ -3,7 +3,6 @@ package teamfortytwo.asteroids;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,8 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
 
-public class MainScreen extends ActionBarActivity implements OnClickListener{
-
+public class MainScreen extends ActionBarActivity implements OnClickListener {
     private ImageButton startButton, scoreButton, tutButton;
     public GameScreen game;
 
@@ -33,7 +31,6 @@ public class MainScreen extends ActionBarActivity implements OnClickListener{
         System.gc();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -42,10 +39,8 @@ public class MainScreen extends ActionBarActivity implements OnClickListener{
     }
 
     @Override
-    public void onClick(View v){
-        Log.i("onClick", "" + v.getId());
-
-        switch(v.getId()){
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.start: { //If the button clicked was the start button
                 startGame(); // Start the game screen
                 break;
@@ -61,13 +56,11 @@ public class MainScreen extends ActionBarActivity implements OnClickListener{
             default: {
                 break;
             }
-
         }
 
     }
 
-    public void startGame(){
-
+    public void startGame() {
         Intent gameActivity = new Intent(MainScreen.this, GameScreen.class); //To create an activity, you need to declare an intent with the parent activty, and the activity you want to create
         gameActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(gameActivity); //This is how you start an activity
@@ -75,20 +68,15 @@ public class MainScreen extends ActionBarActivity implements OnClickListener{
     }
 
     public void startScore() {
-        Log.i("Main", "startScore() called");
-
-        Intent scoreActivity = new Intent (MainScreen.this,ScoreScreen.class );
+        Intent scoreActivity = new Intent(MainScreen.this, ScoreScreen.class);
         scoreActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(scoreActivity);
     }
 
     public void startTutorial() {
-        Log.i("Main", "startTutorial() called");
-
-        Intent tutActivity = new Intent (MainScreen.this, TutorialScreen.class);
+        Intent tutActivity = new Intent(MainScreen.this, TutorialScreen.class);
         tutActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(tutActivity);
-
     }
 
 

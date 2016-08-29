@@ -12,11 +12,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Random;
 
-
-/**
- * Created by BrandonWebster on 4/22/15.
- */
-
 public class GameView extends View implements ValueAnimator.AnimatorUpdateListener {
     /* This class is where drawables actually get updated and drawn. */
     private Bee player;
@@ -41,7 +36,6 @@ public class GameView extends View implements ValueAnimator.AnimatorUpdateListen
     public GameView(Context context) {
         super(context);
 
-
         gameScreen = (GameScreen) context;
         this.screenHeight = GameScreen.screenHeight;
         this.screenWidth = GameScreen.screenWidth;
@@ -55,9 +49,8 @@ public class GameView extends View implements ValueAnimator.AnimatorUpdateListen
         collisions = new Collisions(this);
         player = new Bee(res, collisions, this, new Vector(screenWidth / 2, screenHeight / 10), screenWidth / 12);
 
-
         scoreText = new TextView(gameScreen);
-        scoreText.setText("Score: " + getScore());
+        scoreText.setText(context.getResources().getString(R.string.the_score) + getScore());
         scoreText.layout(0, 0, screenWidth / 6, screenHeight / 12);
         scoreText.setTextSize(16f);
 
@@ -79,7 +72,6 @@ public class GameView extends View implements ValueAnimator.AnimatorUpdateListen
     public void updatePlayer(float angle) {
         float move = angle * (screenWidth / 80);
         player.move(move);
-
     }
 
     public void shoot() {
@@ -92,7 +84,6 @@ public class GameView extends View implements ValueAnimator.AnimatorUpdateListen
         entities.add(bullet);
     }
 
-
     public void destroyEntity(Entity entity) {
         if (entity.equals(player)) {
             gameScreen.endGame();
@@ -101,7 +92,6 @@ public class GameView extends View implements ValueAnimator.AnimatorUpdateListen
         if (entities != null) {
             entities.remove(entity);
         }
-
     }
 
     public void nullEntityArray() {
@@ -117,7 +107,7 @@ public class GameView extends View implements ValueAnimator.AnimatorUpdateListen
         super.onDraw(canvas);
 
         scoreText = new TextView(gameScreen);
-        scoreText.setText("Score: " + getScore());
+        scoreText.setText(getResources().getString(R.string.the_score) + getScore());
         scoreText.layout(0, 0, screenWidth / 6, screenHeight / 12);
         scoreText.setTextSize(16f);
         scoreText.draw(canvas);
@@ -127,7 +117,6 @@ public class GameView extends View implements ValueAnimator.AnimatorUpdateListen
             }
         }
 
-
         player.draw(canvas);
     }
 
@@ -136,12 +125,10 @@ public class GameView extends View implements ValueAnimator.AnimatorUpdateListen
     public void onAnimationUpdate(ValueAnimator animation) {
         if (entities != null) {
             if (frame == 0) {
-                //if(numberOfCaterpillars < 10){
                 entities.add(new Caterpillar(res, collisions, this, new Vector(random.nextInt() % screenWidth, screenHeight), screenWidth / 12));
                 numberOfCaterpillars++;
                 System.gc();
 
-                // }
                 score += 1;
             }
             for (int i = 0; i < entities.size(); i++) {
